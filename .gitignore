@@ -12,6 +12,7 @@ env/
 .coverage
 .coverage.*
 htmlcov/
+*.egg-info/
 
 # Node.js, React, and Vite
 node_modules/
