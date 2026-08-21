@@ -13,6 +13,7 @@ from app.core.time import utc_now
 from app.db.base import Base
 
 if TYPE_CHECKING:
+    from app.models.machine import Machine
     from app.models.user import User
 
 
@@ -41,3 +42,7 @@ class Organization(Base):
     )
 
     users: Mapped[list[User]] = relationship(back_populates="organization")
+    machines: Mapped[list[Machine]] = relationship(
+        back_populates="organization",
+        cascade="all, delete-orphan",
+    )
