@@ -25,3 +25,12 @@ class InvalidWorkingWidthError(ValueError):
     """Raised when an implement has a non-positive working width."""
 
 
+class JobNotFoundError(LookupError):
+    """Raised when a job-scoped action references no job."""
+
+
+class InvalidJobStateTransitionError(ValueError):
+    """Raised when an illegal lifecycle transition is attempted on a job."""
+
+
+

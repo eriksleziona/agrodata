@@ -10,7 +10,9 @@ from app.services.errors import (
     DuplicateDeviceIdError,
     DuplicateUserEmailError,
     ImplementNotFoundError,
+    InvalidJobStateTransitionError,
     InvalidWorkingWidthError,
+    JobNotFoundError,
     MachineNotFoundError,
     OrganizationNotFoundError,
 )
@@ -42,6 +44,26 @@ def create_app() -> FastAPI:
     ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
+            content={"detail": str(exc)},
+        )
+
+    @application.exception_handler(JobNotFoundError)
+    async def job_not_found_handler(
+        request: Request,
+        exc: JobNotFoundError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"detail": str(exc)},
+        )
+
+    @application.exception_handler(InvalidJobStateTransitionError)
+    async def invalid_job_state_transition_handler(
+        request: Request,
+        exc: InvalidJobStateTransitionError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_409_CONFLICT,
             content={"detail": str(exc)},
         )
 

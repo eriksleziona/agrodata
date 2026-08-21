@@ -14,6 +14,7 @@ from app.db.base import Base
 
 if TYPE_CHECKING:
     from app.models.implement import Implement
+    from app.models.job import Job
     from app.models.machine import Machine
     from app.models.user import User
 
@@ -48,6 +49,10 @@ class Organization(Base):
         cascade="all, delete-orphan",
     )
     implements: Mapped[list[Implement]] = relationship(
+        back_populates="organization",
+        cascade="all, delete-orphan",
+    )
+    jobs: Mapped[list[Job]] = relationship(
         back_populates="organization",
         cascade="all, delete-orphan",
     )
