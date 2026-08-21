@@ -9,6 +9,8 @@ from app.api.v1.router import api_v1_router
 from app.services.errors import (
     DuplicateDeviceIdError,
     DuplicateUserEmailError,
+    ImplementNotFoundError,
+    InvalidWorkingWidthError,
     MachineNotFoundError,
     OrganizationNotFoundError,
 )
@@ -30,6 +32,26 @@ def create_app() -> FastAPI:
     ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
+            content={"detail": str(exc)},
+        )
+
+    @application.exception_handler(ImplementNotFoundError)
+    async def implement_not_found_handler(
+        request: Request,
+        exc: ImplementNotFoundError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"detail": str(exc)},
+        )
+
+    @application.exception_handler(InvalidWorkingWidthError)
+    async def invalid_working_width_handler(
+        request: Request,
+        exc: InvalidWorkingWidthError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content={"detail": str(exc)},
         )
 

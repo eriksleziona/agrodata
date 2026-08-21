@@ -16,3 +16,12 @@ class MachineNotFoundError(LookupError):
 class DuplicateDeviceIdError(ValueError):
     """Raised when a device_id is already assigned to another machine."""
 
+
+class ImplementNotFoundError(LookupError):
+    """Raised when an implement-scoped action references no implement."""
+
+
+class InvalidWorkingWidthError(ValueError):
+    """Raised when an implement has a non-positive working width."""
+
+
