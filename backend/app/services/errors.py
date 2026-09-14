@@ -33,4 +33,13 @@ class InvalidJobStateTransitionError(ValueError):
     """Raised when an illegal lifecycle transition is attempted on a job."""
 
 
+class InvalidCredentialsError(ValueError):
+    """Raised when login credentials do not match any user."""
+
+
+class InsufficientPermissionsError(PermissionError):
+    """Raised when a user's role does not permit the requested action."""
+
+
+
 

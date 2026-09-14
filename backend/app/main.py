@@ -10,6 +10,8 @@ from app.services.errors import (
     DuplicateDeviceIdError,
     DuplicateUserEmailError,
     ImplementNotFoundError,
+    InsufficientPermissionsError,
+    InvalidCredentialsError,
     InvalidJobStateTransitionError,
     InvalidWorkingWidthError,
     JobNotFoundError,
@@ -107,10 +109,32 @@ def create_app() -> FastAPI:
             content={"detail": str(exc)},
         )
 
+    @application.exception_handler(InvalidCredentialsError)
+    async def invalid_credentials_handler(
+        request: Request,
+        exc: InvalidCredentialsError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={"detail": str(exc)},
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    @application.exception_handler(InsufficientPermissionsError)
+    async def insufficient_permissions_handler(
+        request: Request,
+        exc: InsufficientPermissionsError,
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_403_FORBIDDEN,
+            content={"detail": str(exc)},
+        )
+
     application.include_router(api_v1_router)
 
     return application
 
 
 app = create_app()
+
 

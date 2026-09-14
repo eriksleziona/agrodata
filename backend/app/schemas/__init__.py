@@ -1,5 +1,6 @@
 """Pydantic schemas for AgroData API and service boundaries."""
 
+from app.schemas.auth import LoginRequest, RegisterRequest, TokenResponse
 from app.schemas.implement import ImplementCreate, ImplementRead, ImplementUpdate
 from app.schemas.job import JobCreate, JobFinish, JobRead
 from app.schemas.machine import MachineCreate, MachineRead, MachineUpdate
@@ -13,11 +14,15 @@ __all__ = [
     "JobCreate",
     "JobFinish",
     "JobRead",
+    "LoginRequest",
     "MachineCreate",
     "MachineRead",
     "MachineUpdate",
     "OrganizationCreate",
     "OrganizationRead",
+    "RegisterRequest",
+    "TokenResponse",
     "UserCreate",
     "UserRead",
 ]
+

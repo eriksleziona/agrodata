@@ -42,6 +42,14 @@ class Settings(BaseSettings):
     database_pool_size: int = Field(default=5, ge=1)
     database_max_overflow: int = Field(default=10, ge=0)
 
+    # JWT Authentication
+    jwt_secret: SecretStr = Field(
+        default=SecretStr("change-me-in-production-secret-key-32b"),
+        validation_alias="JWT_SECRET",
+    )
+    jwt_algorithm: str = "HS256"
+    jwt_expiry_minutes: int = Field(default=60, ge=1)
+
     @property
     def database_url(self) -> URL:
         """Return a SQLAlchemy PostgreSQL URL without exposing secrets in logs."""
